@@ -83,10 +83,10 @@ public class AuthController {
         String token = jwtService.createToken(user.getId(), user.getRole(), user.getEmail());
         ResponseCookie cookie = ResponseCookie.from("token", token)
                 .httpOnly(true)
-                .sameSite("Lax")
-                .secure(false)
+                .sameSite("None")
+                .secure(true)
                 .path("/")
-                .maxAge(Duration.ofDays(7))
+                .maxAge(7*24*60*60)
                 .build();
 
         return ResponseEntity.ok()
@@ -129,10 +129,10 @@ public class AuthController {
     public ResponseEntity<?> logout() {
         ResponseCookie cookie = ResponseCookie.from("token", "")
                 .httpOnly(true)
-                .sameSite("Lax")
-                .secure(false)
+                .sameSite("None")
+                .secure(true)
                 .path("/")
-                .maxAge(Duration.ZERO)
+                .maxAge(0)
                 .build();
 
         return ResponseEntity.ok()
